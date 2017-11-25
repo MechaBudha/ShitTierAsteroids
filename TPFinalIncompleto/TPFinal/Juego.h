@@ -5,8 +5,7 @@
 #include <ctime>
 #include "../../Libreria/libreria.h"
 #include"Nave.h"
-	// completar	
-	// completar
+#include "Asteroide.h"
 #include "Definiciones.h"
 #define MIN_FIL 1
 #define MIN_COL 1
@@ -20,8 +19,7 @@ class Juego{
 	int _puntos;
 	bool _resultado;
 	Nave* _nave;
-	// completar	
-	// completar
+	Asteroide* _vecAst[TOPE];
 public:
 	Juego();
 	~Juego();

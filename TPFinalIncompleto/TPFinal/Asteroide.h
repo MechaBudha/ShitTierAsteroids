@@ -10,7 +10,7 @@ using namespace std;
 class Asteroide{
 	int _x;
 	int _y;
-	// completar
+	static int _cantAsteroides;
 public:
 	Asteroide(int x, int y);
 	~Asteroide();
@@ -20,6 +20,7 @@ public:
 	void colision(Nave* nave);
 	int getX(){ return _x;}
 	int getY(){ return _y;}
+	static int getCantAsteroides();
 	// completar
 };
 #endif

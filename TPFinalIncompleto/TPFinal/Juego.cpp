@@ -3,7 +3,13 @@
 Juego::Juego(){
 }
 Juego::~Juego(){
-// completar
+	delete _nave;
+	for (int i = 0; i < TOPE; i++){
+		if (_vecAst[i]!= NULL){
+			delete _vecAst[i];
+			_vecAst[i] = NULL;
+		}
+	}
 }
 void Juego::init(){
 	srand(time(0));
@@ -12,28 +18,68 @@ void Juego::init(){
 	_puntos=0;
 	_resultado=false;
 	_nave= new Nave(38,21,3,3);
-
-	// completar
+	for(int i = 0; i < TOPE; i++){
+		_vecAst[i] = NULL;
+	}
+	_vecAst[0] = new Asteroide(10,4);
+	_vecAst[1] = new Asteroide(4,8);
+	_vecAst[2] = new Asteroide(15,10);
 }
 void Juego::draw(){
 	if(!_gameOver){
 		display();
-		// completar	
+		for (int i = 0; i < TOPE; i++){
+			if(_vecAst[i]!= NULL){
+				_vecAst[i]->mover();
+			}
+		}
 	}
 }
 void Juego::update(){
-
-
-	// completar
-
-
+	draw();
+	if(_tecla=getKey(true)){
+		switch(_tecla){
+		case KEY_UP:
+			if(_nave->getY() >(MIN_FIL +2)){
+				_nave->borrar();
+				_nave->setY(_nave->getY()-1);
+				_nave->dibujar();
+			}
+			break;
+		case KEY_LEFT:
+			if(_nave->getX()>(MIN_COL +1)){
+				_nave->borrar();
+				_nave->setX(_nave->getX()-1);
+				_nave->dibujar();
+			}
+			break;
+		case KEY_RIGHT:
+			if((_nave->getX()+5)<(MAX_COL)){
+				_nave->borrar();
+				_nave->setX(_nave->getX()+1);
+				_nave->dibujar();
+			}
+			break;
+		case KEY_DOWN:
+			if((_nave->getY()+3) <(MAX_FIL)){
+				_nave->borrar();
+				_nave->setY(_nave->getY()+1);
+				_nave->dibujar();
+			}
+			break;
+		case KEY_ESC:
+			_gameOver = true;
+			break;
+		}
+	}
 	if(_puntos==PUNTOS){
 		_resultado=true;
 		_gameOver=true;
 	}
-	if((_nave->getVidas()==0))	
+	if((_nave->getVidas()==0)){
 		_gameOver=true;
-	_nave->morir();
+		_nave->morir();
+	}
 }
 void Juego::input(){
 	_tecla=' ';
@@ -42,7 +88,6 @@ void Juego::input(){
 		// completar
 		}
 	}
-}
 void Juego::play(){
 	init();
 	hideCursor();
@@ -75,4 +120,6 @@ void Juego::display(){
 		gotoxy(17+i,1);
 		cout<<(char)CORAZON;
 	}
+	gotoxy(55,1);
+	cout<<"Asteroides:"<<Asteroide::getCantAsteroides()<<endl;
 }
