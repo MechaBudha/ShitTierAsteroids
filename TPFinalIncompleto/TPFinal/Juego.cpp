@@ -72,6 +72,14 @@ void Juego::update(){
 			break;
 		}
 	}
+
+	for(int i = 0; i<TOPE; i++){
+		if(_vecAst[i] != NULL){
+			_vecAst[i]->colision(_nave);
+			_nave->morir();
+
+		}
+	}
 	if(_puntos==PUNTOS){
 		_resultado=true;
 		_gameOver=true;
